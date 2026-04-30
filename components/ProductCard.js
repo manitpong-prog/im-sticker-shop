@@ -18,6 +18,11 @@ export default function ProductCard({ item, usePromoPrice = false }) {
   const hasSellingPrice = sellingPrice !== null;
   const hasPromotionPrice = hasPromoPrice(item);
 
+  const isPromotionItem =
+    item.is_promotion === true || item.official_promo === true;
+
+  const shouldUsePromoPrice = usePromoPrice || isPromotionItem;
+
   const imageList = normalizeImageList(item.image_list);
   const isEmoji = item.type === 'emoji';
   const isAnimatedEmoji = isEmoji && isAnimatedImageList(imageList);
@@ -54,7 +59,7 @@ export default function ProductCard({ item, usePromoPrice = false }) {
 
         {item.is_promotion ? (
           <div className="absolute right-5 top-5 rounded-full bg-orange-600 px-3 py-1 text-[11px] font-bold text-white">
-            โปรฯ
+            โปรลดราคา
           </div>
         ) : null}
       </div>
@@ -65,12 +70,13 @@ export default function ProductCard({ item, usePromoPrice = false }) {
         </h3>
 
         <div className="mt-3 flex flex-wrap items-baseline gap-2">
-          {usePromoPrice ? (
+          {shouldUsePromoPrice ? (
             hasPromotionPrice ? (
               <>
                 <span className="text-xs text-slate-400 line-through">
                   ปกติ {formatPrice(item.price)}
                 </span>
+
                 <span className="text-base font-black text-orange-700">
                   {formatPrice(item.promo_price)}
                 </span>
@@ -107,7 +113,7 @@ export default function ProductCard({ item, usePromoPrice = false }) {
           </p>
         ) : null}
 
-        {usePromoPrice && hasPromotionPrice && promoEndDate ? (
+        {shouldUsePromoPrice && hasPromotionPrice && promoEndDate ? (
           <p className="mt-1 text-xs leading-relaxed text-slate-500">
             หมดโปร {promoEndDate}
           </p>
