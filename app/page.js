@@ -243,6 +243,55 @@ function ProductSection({ section, items }) {
   );
 }
 
+function PromoCreatorsBanner() {
+  return (
+    <Link
+      href="/promotion/creators"
+      className="group relative block overflow-hidden rounded-[2rem] border border-orange-200 bg-gradient-to-r from-orange-500 via-orange-400 to-[#06C755] p-[1px] shadow-xl shadow-orange-500/20 transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-orange-500/30"
+    >
+      <div className="relative overflow-hidden rounded-[calc(2rem-1px)] bg-[#0f172a] px-6 py-7 md:px-8 md:py-8">
+        <div className="absolute -left-10 top-0 h-36 w-36 rounded-full bg-orange-400/20 blur-3xl" />
+        <div className="absolute right-0 top-0 h-36 w-36 rounded-full bg-green-400/20 blur-3xl" />
+
+        <div className="relative flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-3xl">
+            <div className="mb-3 inline-flex rounded-full bg-orange-500/15 px-4 py-2 text-xs font-black text-orange-300 md:text-sm">
+              🔥โปรโมชันพิเศษ🔥
+            </div>
+
+            <h2 className="text-2xl font-black leading-tight tracking-tight text-white md:text-4xl">
+              โปรโมชั่นลดทั้งครีเอเตอร์
+            </h2>
+
+            <p className="mt-3 text-sm leading-7 text-slate-300 md:text-base">
+              🔥รวมโปรโมชันราคาพิเศษจากครีเอเตอร์ ทั้งสติกเกอร์และอิโมจิ
+              กดดูรายละเอียดแคมเปญทั้งหมดได้ที่หน้านี้🔥
+            </p>
+
+            <div className="mt-4 flex flex-wrap gap-2">
+              <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white">
+                50© ลายละ 15 บาท
+              </span>
+              <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white">
+                50© ลายละ 12 บาท
+              </span>
+              <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-bold text-white">
+                อิโมจิ 70© ลายละ 20 บาท
+              </span>
+            </div>
+          </div>
+
+          <div className="shrink-0">
+            <div className="inline-flex h-12 items-center justify-center rounded-full bg-[#06C755] px-6 text-sm font-black text-white shadow-lg shadow-green-500/20 transition group-hover:scale-105">
+              ดูรายละเอียดโปรโมชั่น →
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
 export default async function HomePage() {
   const sectionResults = await Promise.all(
     sectionsConfig.map(async section => {
@@ -353,10 +402,13 @@ export default async function HomePage() {
       </section>
 
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-8 md:py-12">
-        {sectionResults.map(({ section, items }) => (
-          <ProductSection key={section.key} section={section} items={items} />
-        ))}
-      </div>
+  {sectionResults.map(({ section, items }) => (
+    <div key={section.key} className="contents">
+      {section.key === 'new-official-sticker' ? <PromoCreatorsBanner /> : null}
+      <ProductSection section={section} items={items} />
+    </div>
+  ))}
+</div>
 
       <SiteFooter />
     </main>
