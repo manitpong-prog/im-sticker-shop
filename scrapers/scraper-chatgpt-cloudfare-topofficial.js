@@ -4,13 +4,13 @@ const { createClient } = require('@supabase/supabase-js');
 const supabase = createClient('https://mtmpzbsatolmuttzdxet.supabase.co', 'sb_secret_3rRZ1zjY2mqKCw70VG-wDw_-vfEUS-f');
 
 // === CONFIG ===
-const START_PAGE = 5;
+const START_PAGE = 1;
 const END_PAGE = 1;
 const PAGE_DELAY_MS = 1000;
 // ==============
 
 async function runScraper() {
-  const browser = await chromium.launch({ headless: false });
+  const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext();
   const page = await context.newPage();
 
