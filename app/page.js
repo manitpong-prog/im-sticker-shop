@@ -7,9 +7,9 @@ import ProductCard from '@/components/ProductCard';
 export const revalidate = 300;
 
 export const metadata = {
-  title: 'iM Sticker Shop | สติกเกอร์ไลน์ อิโมจิไลน์ ธีมไลน์ ราคาถูก',
+  title: 'iM Sticker Shop | ซื้อสติกเกอร์ไลน์ อิโมจิไลน์ ธีมไลน์ ราคาถูก',
   description:
-    'iM Sticker Shop บริการส่งของขวัญสติกเกอร์ไลน์ อิโมจิไลน์ ธีมไลน์ และเมโลดี้ไลน์ ราคาถูกกว่ากดซื้อเอง ส่งไวทันใจ',
+    'iM Sticker Shop บริการส่งของขวัญสติกเกอร์ไลน์ อิโมจิไลน์ ธีมไลน์ และเมโลดี้ไลน์ ราคาถูกกว่ากดซื้อเอง เหมาะสำหรับคนที่ต้องการซื้อสติกเกอร์ไลน์หรือซื้อสติ๊กเกอร์ไลน์ในราคาคุ้มค่า',
 };
 
 const DEFAULT_TABLE_NAME = 'test_stickers';
@@ -48,10 +48,12 @@ const minimalProductSelect = `
 const sectionsConfig = [
   {
     key: 'discount-promotion',
-    title: 'โปรโมชั่นลดราคา',
-    subtitle: 'สินค้าราคาพิเศษ คุ้มกว่ากดซื้อเอง',
+    title: 'ซื้อสติกเกอร์ไลน์ลดราคา',
+    subtitle:
+      'รวมโปรสติ๊กเกอร์ไลน์ราคาถูกจากครีเอเตอร์ พร้อมราคาพิเศษและวันหมดโปรโมชั่น',
     href: '/promotion',
-    badge: 'ลดราคา',
+    badge: 'โปรลดราคา',
+    linkLabel: 'ดูโปรสติกเกอร์ไลน์ลดราคา',
     applyFilter: query => query.eq('is_promotion', true),
   },
   {
@@ -60,6 +62,7 @@ const sectionsConfig = [
     subtitle: 'รายการที่มีโปรโมชันจากทาง LINE',
     href: '/promotion/official',
     badge: 'LINE Promo',
+    linkLabel: 'ดูโปรจาก LINE',
     applyFilter: query => query.eq('official_promo', true),
   },
   {
@@ -226,7 +229,7 @@ function ProductSection({ section, items }) {
           href={section.href}
           className="inline-flex h-11 items-center justify-center rounded-full border border-orange-200 bg-orange-50 px-5 text-sm font-black text-blue-950 transition hover:border-orange-400 hover:text-orange-700"
         >
-          ดูทั้งหมด
+          {section.linkLabel || 'ดูทั้งหมด'}
         </Link>
       </div>
 
@@ -238,6 +241,52 @@ function ProductSection({ section, items }) {
             usePromoPrice={usePromoPrice}
           />
         ))}
+      </div>
+    </section>
+  );
+}
+
+function PromotionInternalLinkBanner() {
+  return (
+    <section className="mx-auto w-full max-w-7xl px-4 py-4">
+      <div className="overflow-hidden rounded-[2rem] border border-orange-200 bg-white p-5 shadow-sm md:p-7">
+        <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-3xl">
+            <div className="mb-3 inline-flex rounded-full bg-orange-100 px-4 py-2 text-xs font-black text-orange-700 md:text-sm">
+              โปรสติ๊กเกอร์ไลน์ราคาถูก
+            </div>
+
+            <h2 className="text-2xl font-black leading-tight tracking-tight text-blue-950 md:text-3xl">
+              ซื้อสติกเกอร์ไลน์ลดราคา พร้อมโปรพิเศษจากครีเอเตอร์
+            </h2>
+
+            <p className="mt-3 text-sm leading-7 text-slate-600 md:text-base">
+              กำลังมองหาที่ซื้อสติกเกอร์ไลน์หรือซื้อสติ๊กเกอร์ไลน์ในราคาคุ้มค่าอยู่ใช่ไหม?
+              เรารวมโปรโมชั่นสติกเกอร์ไลน์ลดราคาจากครีเอเตอร์ไว้ให้เลือกดูง่าย ๆ
+              พร้อมราคาปกติ ราคาพิเศษ และวันหมดโปรในหน้าเดียว
+            </p>
+
+            <p className="mt-3 text-sm leading-7 text-slate-600 md:text-base">
+              ดูรายการทั้งหมดได้ที่หน้า{' '}
+              <Link
+                href="/promotion"
+                className="font-black text-orange-700 underline decoration-orange-300 underline-offset-4 transition hover:text-orange-900"
+              >
+                ซื้อสติ๊กเกอร์ไลน์ราคาถูก
+              </Link>{' '}
+              เพื่อเลือกชุดที่ชอบก่อนโปรหมด
+            </p>
+          </div>
+
+          <div className="shrink-0">
+            <Link
+              href="/promotion"
+              className="inline-flex h-12 items-center justify-center rounded-full bg-orange-700 px-6 text-sm font-black text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-800"
+            >
+              ดูโปรสติกเกอร์ไลน์ลดราคา →
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -315,7 +364,7 @@ export default async function HomePage() {
         <div className="relative mx-auto w-full max-w-7xl px-4 py-12 md:py-20">
           <div className="max-w-5xl">
             <div className="mb-4 inline-flex rounded-full bg-orange-100 px-4 py-2 text-sm font-black text-orange-700">
-              ร้านค้าทางการที่ได้รับอนุญาตจาก Line Sticker หมายเลข LVS0454
+              ร้านค้าทางการที่ได้รับอนุญาตจาก LINE Sticker หมายเลข LVS0454
             </div>
 
             <h1 className="text-5xl font-black leading-none tracking-[-0.08em] text-blue-950 md:text-7xl">
@@ -356,7 +405,7 @@ export default async function HomePage() {
                 href="/promotion"
                 className="inline-flex h-12 items-center justify-center rounded-full bg-orange-700 px-6 text-sm font-black text-white shadow-lg shadow-orange-500/20 transition hover:bg-orange-800"
               >
-                ดูโปรโมชั่นลดราคา
+                ซื้อสติกเกอร์ไลน์ลดราคา
               </Link>
 
               <a
@@ -401,16 +450,20 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <PromotionInternalLinkBanner />
+
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-8 md:py-12">
-  {sectionResults.map(({ section, items }) => (
-    <div key={section.key} className="contents">
-      {section.key === 'new-official-sticker' ? <PromoCreatorsBanner /> : null}
-      <ProductSection section={section} items={items} />
-    </div>
-  ))}
-</div>
+        {sectionResults.map(({ section, items }) => (
+          <div key={section.key} className="contents">
+            {section.key === 'new-official-sticker' ? (
+              <PromoCreatorsBanner />
+            ) : null}
+            <ProductSection section={section} items={items} />
+          </div>
+        ))}
+      </div>
 
       <SiteFooter />
     </main>
   );
-}
+    }
