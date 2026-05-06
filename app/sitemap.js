@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase';
 
-const SITE_URL = 'https://imstickerpro.shop';
+const SITE_URL = 'https://www.imstickerpro.shop';
 
 const staticRoutes = [
   {
