@@ -1,4 +1,4 @@
-const SITE_URL = 'https://imstickerpro.shop';
+const SITE_URL = 'https://www.imstickerpro.shop';
 
 export default function robots() {
   return {
