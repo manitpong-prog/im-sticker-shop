@@ -42,6 +42,7 @@ const minimalProductSelect = `
   main_image,
   image_list,
   is_promotion,
+  promo_end_date,
   updated_at
 `;
 
