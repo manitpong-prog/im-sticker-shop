@@ -57,14 +57,28 @@ const sectionsConfig = [
     applyFilter: query => query.eq('is_promotion', true),
   },
   {
-    key: 'official-promotion',
-    title: 'โปรโมชั่นจากทางไลน์',
-    subtitle: 'รายการที่มีโปรโมชันจากทาง LINE',
-    href: '/promotion/official',
-    badge: 'LINE Promo',
-    linkLabel: 'ดูโปรจาก LINE',
-    applyFilter: query => query.eq('official_promo', true),
-  },
+  key: 'official-promotion',
+  title: 'โปรโมชั่นจากทางไลน์',
+  subtitle: 'รายการที่มีโปรโมชันจากทาง LINE',
+  href: '/promotion/official',
+  badge: 'LINE Promo',
+  linkLabel: 'ดูโปรจาก LINE',
+  sources: [
+    {
+      tableName: 'test_stickers',
+      tableMode: 'full',
+      applyFilter: query => query.eq('official_promo', true),
+    },
+    {
+      tableName: 'test_taiwan',
+      tableMode: 'minimal',
+      categoryOverride: 'taiwan',
+      officialPromoOverride: true,
+      applyFilter: query => query.eq('is_line_sale', true),
+    },
+  ],
+  applyFilter: query => query.eq('official_promo', true),
+},
   {
     key: 'new-official-sticker',
     title: 'สติกเกอร์ทางการมาใหม่',
@@ -170,17 +184,25 @@ function normalizeProductItem(item, section = {}) {
     is_new_emoji_official: item.is_new_emoji_official ?? false,
     is_new_theme_official: item.is_new_theme_official ?? false,
     is_promotion: item.is_promotion ?? false,
-    official_promo: item.official_promo ?? false,
+    official_promo:
+      section.officialPromoOverride === true
+        ? true
+        : item.official_promo ?? false,
     promo_price: item.promo_price ?? null,
     promo_end_date: item.promo_end_date ?? null,
     updated_at: item.updated_at,
   };
 }
 
-async function getSectionItems(section) {
-  const tableName = section.tableName || DEFAULT_TABLE_NAME;
+async function fetchSectionItems(section, sourceConfig = {}) {
+  const config = {
+    ...section,
+    ...sourceConfig,
+  };
+
+  const tableName = config.tableName || DEFAULT_TABLE_NAME;
   const selectColumns =
-    section.tableMode === 'minimal' ? minimalProductSelect : productSelect;
+    config.tableMode === 'minimal' ? minimalProductSelect : productSelect;
 
   const baseQuery = supabase
     .from(tableName)
@@ -188,15 +210,53 @@ async function getSectionItems(section) {
     .order('updated_at', { ascending: false })
     .limit(SECTION_LIMIT);
 
-  const finalQuery = section.applyFilter(baseQuery);
+  const finalQuery = config.applyFilter
+    ? config.applyFilter(baseQuery)
+    : baseQuery;
+
   const { data, error } = await finalQuery;
 
   if (error) {
-    console.error(`[${section.key}] ${error.message}`);
+    console.error(`[${section.key}:${tableName}] ${error.message}`);
     return [];
   }
 
-  return (data || []).map(item => normalizeProductItem(item, section));
+  return (data || []).map(item => normalizeProductItem(item, config));
+}
+
+async function getSectionItems(section) {
+  if (Array.isArray(section.sources) && section.sources.length > 0) {
+    const results = await Promise.all(
+      section.sources.map(source => fetchSectionItems(section, source))
+    );
+
+    const mergedItems = results
+      .flat()
+      .sort((a, b) => {
+        const dateA = a.updated_at ? new Date(a.updated_at).getTime() : 0;
+        const dateB = b.updated_at ? new Date(b.updated_at).getTime() : 0;
+
+        return dateB - dateA;
+      });
+
+    const uniqueItems = [];
+
+    for (const item of mergedItems) {
+      if (uniqueItems.some(existingItem => existingItem.id === item.id)) {
+        continue;
+      }
+
+      uniqueItems.push(item);
+
+      if (uniqueItems.length >= SECTION_LIMIT) {
+        break;
+      }
+    }
+
+    return uniqueItems;
+  }
+
+  return fetchSectionItems(section);
 }
 
 function ProductSection({ section, items }) {
