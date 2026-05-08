@@ -37,8 +37,6 @@ const minimalProductSelect = `
   updated_at
 `;
 
-
-
 function getSafePage(pageValue) {
   const page = Number(pageValue);
 
@@ -109,6 +107,7 @@ function getPaginationItems(currentPage, totalPages) {
     .filter(page => page >= 1 && page <= totalPages)
     .sort((a, b) => a - b);
 }
+
 function normalizeProductItem(item, config = {}) {
   return {
     id: item.id,
@@ -122,29 +121,37 @@ function normalizeProductItem(item, config = {}) {
     is_new_emoji_official: item.is_new_emoji_official ?? false,
     is_new_theme_official: item.is_new_theme_official ?? false,
     is_promotion: item.is_promotion ?? false,
-    official_promo: item.official_promo ?? false,
+    official_promo:
+      config.officialPromoOverride === true
+        ? true
+        : item.official_promo ?? false,
     promo_price: item.promo_price ?? null,
     promo_end_date: item.promo_end_date ?? null,
     updated_at: item.updated_at,
   };
 }
 
-async function getListingProducts({ config, searchParams }) {
+async function fetchListingProducts({ config, searchParams, sourceConfig = {} }) {
+  const finalConfig = {
+    ...config,
+    ...sourceConfig,
+  };
+
   const page = getSafePage(searchParams?.page);
   const searchQuery = getSafeSearch(searchParams?.q);
 
   const from = (page - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
 
-  const tableName = config.tableName || DEFAULT_TABLE_NAME;
-const selectColumns =
-  config.tableMode === 'minimal' ? minimalProductSelect : productSelect;
+  const tableName = finalConfig.tableName || DEFAULT_TABLE_NAME;
+  const selectColumns =
+    finalConfig.tableMode === 'minimal' ? minimalProductSelect : productSelect;
 
-let query = supabase
-  .from(tableName)
-  .select(selectColumns, { count: 'exact' });
+  let query = supabase
+    .from(tableName)
+    .select(selectColumns, { count: 'exact' });
 
-  query = config.applyFilter(query);
+  query = finalConfig.applyFilter ? finalConfig.applyFilter(query) : query;
 
   if (searchQuery) {
     query = query.ilike('name', `%${searchQuery}%`);
@@ -155,7 +162,7 @@ let query = supabase
     .range(from, to);
 
   if (error) {
-    console.error(`[listing:${config.key}] ${error.message}`);
+    console.error(`[listing:${config.key}:${tableName}] ${error.message}`);
 
     return {
       items: [],
@@ -170,7 +177,98 @@ let query = supabase
   const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
 
   return {
-    items: (data || []).map(item => normalizeProductItem(item, config)),
+    items: (data || []).map(item => normalizeProductItem(item, finalConfig)),
+    count: totalCount,
+    page,
+    totalPages,
+    searchQuery,
+  };
+}
+
+async function getListingProducts({ config, searchParams }) {
+  const page = getSafePage(searchParams?.page);
+  const searchQuery = getSafeSearch(searchParams?.q);
+
+  if (!Array.isArray(config.sources) || config.sources.length === 0) {
+    return fetchListingProducts({
+      config,
+      searchParams,
+    });
+  }
+
+  const fetchLimit = page * PAGE_SIZE;
+
+  const results = await Promise.all(
+    config.sources.map(async sourceConfig => {
+      const finalConfig = {
+        ...config,
+        ...sourceConfig,
+      };
+
+      const tableName = finalConfig.tableName || DEFAULT_TABLE_NAME;
+      const selectColumns =
+        finalConfig.tableMode === 'minimal'
+          ? minimalProductSelect
+          : productSelect;
+
+      let query = supabase
+        .from(tableName)
+        .select(selectColumns, { count: 'exact' });
+
+      query = finalConfig.applyFilter ? finalConfig.applyFilter(query) : query;
+
+      if (searchQuery) {
+        query = query.ilike('name', `%${searchQuery}%`);
+      }
+
+      const { data, error, count } = await query
+        .order('updated_at', { ascending: false })
+        .range(0, fetchLimit - 1);
+
+      if (error) {
+        console.error(`[listing:${config.key}:${tableName}] ${error.message}`);
+
+        return {
+          items: [],
+          count: 0,
+        };
+      }
+
+      return {
+        items: (data || []).map(item => normalizeProductItem(item, finalConfig)),
+        count: count || 0,
+      };
+    })
+  );
+
+  const mergedItems = results
+    .flatMap(result => result.items)
+    .sort((a, b) => {
+      const dateA = a.updated_at ? new Date(a.updated_at).getTime() : 0;
+      const dateB = b.updated_at ? new Date(b.updated_at).getTime() : 0;
+
+      return dateB - dateA;
+    });
+
+  const uniqueItems = [];
+  const seenIds = new Set();
+
+  for (const item of mergedItems) {
+    if (!item?.id) continue;
+    if (seenIds.has(item.id)) continue;
+
+    seenIds.add(item.id);
+    uniqueItems.push(item);
+  }
+
+  const totalCount = results.reduce((sum, result) => sum + result.count, 0);
+  const totalPages = Math.max(1, Math.ceil(totalCount / PAGE_SIZE));
+
+  const from = (page - 1) * PAGE_SIZE;
+  const to = from + PAGE_SIZE;
+
+  return {
+    items: uniqueItems.slice(from, to),
     count: totalCount,
     page,
     totalPages,
