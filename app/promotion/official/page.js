@@ -11,6 +11,22 @@ const officialPromotionConfig = {
   basePath: '/promotion/official',
   hiddenParams: {},
   usePromoPrice: true,
+
+  sources: [
+    {
+      tableName: 'test_stickers',
+      tableMode: 'full',
+      applyFilter: query => query.eq('official_promo', true),
+    },
+    {
+      tableName: 'test_taiwan',
+      tableMode: 'minimal',
+      categoryOverride: 'taiwan',
+      officialPromoOverride: true,
+      applyFilter: query => query.eq('is_line_sale', true),
+    },
+  ],
+
   applyFilter: query => query.eq('official_promo', true),
 };
 
