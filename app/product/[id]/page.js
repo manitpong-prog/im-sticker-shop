@@ -54,6 +54,7 @@ const productSelect = `
   promo_end_date,
   updated_at
 `;
+
 const minimalProductSelect = `
   id,
   name,
@@ -63,8 +64,10 @@ const minimalProductSelect = `
   main_image,
   image_list,
   is_promotion,
+  promo_end_date,
   updated_at
 `;
+
 function normalizeProductItem(item, tableConfig = {}) {
   return {
     id: item.id,
@@ -84,6 +87,7 @@ function normalizeProductItem(item, tableConfig = {}) {
     updated_at: item.updated_at,
   };
 }
+
 async function getProduct(id) {
   for (const tableConfig of PRODUCT_TABLES) {
     const selectColumns =
@@ -210,12 +214,28 @@ function ProductPriceBox({ product }) {
           ) : null}
         </div>
       ) : priceInfo.mode === 'normal' ? (
-        <div className="text-3xl font-black text-orange-700">
-          {formatSellingPrice(product.price)}
+        <div>
+          <div className="text-3xl font-black text-orange-700">
+            {formatSellingPrice(product.price)}
+          </div>
+
+          {promoEndDate ? (
+            <p className="mt-2 text-sm leading-relaxed text-slate-500">
+              หมดเขต {promoEndDate}
+            </p>
+          ) : null}
         </div>
       ) : (
-        <div className="text-xl font-black text-orange-700">
-          สอบถามราคาเพิ่มเติม
+        <div>
+          <div className="text-xl font-black text-orange-700">
+            สอบถามราคาเพิ่มเติม
+          </div>
+
+          {promoEndDate ? (
+            <p className="mt-2 text-sm leading-relaxed text-slate-500">
+              หมดเขต {promoEndDate}
+            </p>
+          ) : null}
         </div>
       )}
     </div>
