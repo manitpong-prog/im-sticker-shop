@@ -113,7 +113,7 @@ export default function ProductCard({ item, usePromoPrice = false }) {
           </p>
         ) : null}
 
-        {shouldUsePromoPrice && hasPromotionPrice && promoEndDate ? (
+        {shouldUsePromoPrice && promoEndDate ? (
           <p className="mt-1 text-xs leading-relaxed text-slate-500">
             หมดโปร {promoEndDate}
           </p>
