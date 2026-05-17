@@ -87,6 +87,10 @@ function getPageConfig(category, searchParams = {}) {
 
   const isNewPage = isNewOfficialStickerPage(category, searchParams);
 
+  if (category === 'official_sticker' && !isNewPage) {
+  return null;
+}
+
   return {
   key: isNewPage ? 'new-official-sticker' : category,
   title: isNewPage && config.newTitle ? config.newTitle : config.title,
