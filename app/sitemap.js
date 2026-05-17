@@ -38,11 +38,7 @@ const staticRoutes = [
     changeFrequency: 'daily',
     priority: 0.9,
   },
-  {
-    path: '/category/official_sticker',
-    changeFrequency: 'daily',
-    priority: 0.85,
-  },
+  
   {
     path: '/category/creator_sticker',
     changeFrequency: 'daily',
