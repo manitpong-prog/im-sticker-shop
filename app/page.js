@@ -91,14 +91,7 @@ const sectionsConfig = [
         .eq('category', 'official_sticker')
         .eq('is_new_sticker_official', true),
   },
-  {
-    key: 'top-official-sticker',
-    title: 'สติกเกอร์ทางการสุดฮิต',
-    subtitle: 'รวมสติกเกอร์ทางการยอดนิยม',
-    href: '/category/official_sticker',
-    badge: 'Official',
-    applyFilter: query => query.eq('category', 'official_sticker'),
-  },
+  
   {
     key: 'top-creator-sticker',
     title: 'สติกเกอร์ครีเอเตอร์สุดฮิต',
