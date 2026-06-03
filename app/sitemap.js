@@ -1,5 +1,7 @@
 import { supabase } from '@/lib/supabase';
 
+export const revalidate = 3600;
+
 const SITE_URL = 'https://www.imstickerpro.shop';
 
 const staticRoutes = [
@@ -34,11 +36,10 @@ const staticRoutes = [
     priority: 0.8,
   },
   {
-    path: '/category/official_sticker?new=true',
+    path: '/category/official_sticker',
     changeFrequency: 'daily',
     priority: 0.9,
   },
-  
   {
     path: '/category/creator_sticker',
     changeFrequency: 'daily',
@@ -81,51 +82,8 @@ const staticRoutes = [
   },
 ];
 
-const productTables = ['test_stickers', 'test_indo', 'test_taiwan'];
-
 function absoluteUrl(path) {
   return `${SITE_URL}${path}`;
-}
-
-async function getProductsFromTable(tableName) {
-  const { data, error } = await supabase
-    .from(tableName)
-    .select('id, updated_at')
-    .order('updated_at', { ascending: false });
-
-  if (error) {
-    console.error(`[sitemap:${tableName}] ${error.message}`);
-    return [];
-  }
-
-  return data || [];
-}
-
-async function getProductUrls() {
-  const results = await Promise.all(
-    productTables.map(tableName => getProductsFromTable(tableName))
-  );
-
-  const seenIds = new Set();
-  const urls = [];
-
-  results.flat().forEach(product => {
-    if (!product?.id) return;
-    if (seenIds.has(product.id)) return;
-
-    seenIds.add(product.id);
-
-    urls.push({
-      url: absoluteUrl(`/product/${product.id}`),
-      lastModified: product.updated_at
-        ? new Date(product.updated_at)
-        : new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    });
-  });
-
-  return urls;
 }
 
 async function getBlogUrls() {
@@ -144,24 +102,20 @@ async function getBlogUrls() {
     .filter(post => post.slug)
     .map(post => ({
       url: absoluteUrl(`/blog/${post.slug}`),
-      lastModified: post.created_at ? new Date(post.created_at) : new Date(),
+      lastModified: post.created_at ? new Date(post.created_at) : undefined,
       changeFrequency: 'monthly',
       priority: 0.65,
     }));
 }
 
 export default async function sitemap() {
-  const now = new Date();
-
   const staticUrls = staticRoutes.map(route => ({
     url: absoluteUrl(route.path),
-    lastModified: now,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
 
-  const productUrls = await getProductUrls();
   const blogUrls = await getBlogUrls();
 
-  return [...staticUrls, ...productUrls, ...blogUrls];
+  return [...staticUrls, ...blogUrls];
 }
