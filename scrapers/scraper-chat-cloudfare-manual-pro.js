@@ -26,24 +26,24 @@ const PAGE_DELAY_MS = 2000;
 // 📝 ใส่ลิงก์สินค้าที่ต้องการดึงเองตรงนี้
 const manualLinks = [
   {
-    link: 'https://line.me/S/sticker/34646123',
+    link: 'https://line.me/S/sticker/34790894',
     promo_price: 15,
     promo_end_date: '2026-07-31',
   },
   {
-    link: 'https://line.me/S/sticker/33461447',
+    link: 'https://line.me/S/sticker/34791874',
     promo_price: 15,
     promo_end_date: '2026-07-31',
   },
   {
-    link: 'https://line.me/S/sticker/33458789',
+    link: 'https://line.me/S/sticker/34797960',
     promo_price: 15,
     promo_end_date: '2026-07-31',
   },
   {
-    link: 'https://line.me/S/sticker/33390375',
-    promo_price: 15,
-    promo_end_date: '2026-07-31',
+    link: 'https://line.me/S/sticker/31253845',
+    promo_price: 10,
+    promo_end_date: '2026-07-02',
   },
 ];
 // ==========================================
@@ -110,11 +110,11 @@ async function runManualPromotionScraper() {
     for (let i = 0; i < manualLinks.length; i++) {
       const item = manualLinks[i];
 
-const originalLink = item.link;
-const link = convertToThaiStoreUrl(originalLink);
+      const originalLink = item.link;
+      const link = convertToThaiStoreUrl(originalLink);
 
-const itemPromoPrice = item.promo_price ?? PROMO_PRICE;
-const itemPromoEndDate = item.promo_end_date ?? PROMO_END_DATE;
+      const itemPromoPrice = item.promo_price ?? PROMO_PRICE;
+      const itemPromoEndDate = item.promo_end_date ?? PROMO_END_DATE;
 
       console.log(`\n[${i + 1}/${manualLinks.length}] ➡️ กำลังดำเนินการ: ${link}`);
 
