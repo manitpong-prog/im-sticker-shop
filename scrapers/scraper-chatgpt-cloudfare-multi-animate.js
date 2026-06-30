@@ -25,25 +25,13 @@ const PAGE_DELAY_MS = 2000;
 
 // 📝 ใส่ลิงก์สินค้าที่ต้องการดึงเองตรงนี้
 const manualLinks = [
-'https://line.me/S/sticker/33771713/',
-'https://line.me/S/sticker/33758784/',
-'https://line.me/S/sticker/33052634/',
-'https://line.me/S/sticker/33067615/',
-'https://line.me/S/sticker/33221483/',
-'https://line.me/S/sticker/33291807/',
-'https://line.me/S/sticker/33334462/',
-'https://line.me/S/sticker/33334445/',
-'https://line.me/S/sticker/33487371/',
-'https://line.me/S/sticker/33500229/',
-'https://line.me/S/sticker/33574925/',
-'https://line.me/S/sticker/33583569/',
-'https://line.me/S/sticker/33600607/',
-'https://line.me/S/sticker/33609123/',
-'https://line.me/S/sticker/33715799/',
-'https://line.me/S/sticker/33722925/',
-'https://line.me/S/sticker/33604799/',
-'https://line.me/S/sticker/33756183/',
-];
+  'https://line.me/S/sticker/34672262',
+  'https://line.me/S/sticker/33390375',
+  'https://line.me/S/sticker/33458789',
+  'https://line.me/S/sticker/33461447',
+  'https://line.me/S/sticker/34646123',
+
+  ];
 // ==========================================
 
 function convertToThaiStoreUrl(rawLink) {

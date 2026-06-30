@@ -4,7 +4,7 @@ const { createClient } = require('@supabase/supabase-js');
 const supabase = createClient('https://mtmpzbsatolmuttzdxet.supabase.co', 'sb_secret_3rRZ1zjY2mqKCw70VG-wDw_-vfEUS-f');
 
 // === CONFIG ===
-const START_PAGE = 10;
+const START_PAGE = 1;
 const END_PAGE = 1;
 const PAGE_DELAY_MS = 1000;
 // ==============

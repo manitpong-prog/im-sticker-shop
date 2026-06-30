@@ -148,7 +148,7 @@ async function runScraperTaiwan() {
 
           let price = 0;
 
-          if (priceText.includes('US$1.99')) {
+          if (priceText.includes('NT$60')) {
             price = 65;
           } else {
             price = parseInt(priceText.replace(/[^0-9]/g, ''), 10) || 0;

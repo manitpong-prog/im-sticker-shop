@@ -27,7 +27,7 @@ async function runScraper() {
     },
     {
       name: 'อิโมจิครีเอเตอร์สุดฮิต',
-      url: 'https://store.line.me/emojishop/showcase/top_creators/th',
+      url: 'https://store.line.me/emojishop/showcase/new_creators/th',
       type: 'emoji',
       category: 'creator_emoji',
       is_new_sticker_official: false,
