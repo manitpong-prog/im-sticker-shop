@@ -141,7 +141,7 @@ export default function PromotionCreatorsPage() {
         <article className="rounded-[2rem] border border-slate-700/70 bg-slate-800/40 p-6 shadow-2xl backdrop-blur-sm md:p-10">
           <section>
             <h2 className="text-2xl font-black leading-tight text-orange-400 md:text-3xl">
-              🔥 โปรโมชั่นลดราคาครั้งใหญ่ ได้รับส่วนลดจากครีเอเตอร์ 🔥
+              🔥 โปรโมชั่นลดราคาทุกลาย ได้รับส่วนลดจากครีเอเตอร์ 🔥
             </h2>
 
             <p className="mt-5 text-base leading-8 text-slate-300">
