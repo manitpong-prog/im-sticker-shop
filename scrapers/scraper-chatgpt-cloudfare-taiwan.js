@@ -4,8 +4,8 @@ const { createClient } = require('@supabase/supabase-js');
 const supabase = createClient('https://mtmpzbsatolmuttzdxet.supabase.co', 'sb_secret_3rRZ1zjY2mqKCw70VG-wDw_-vfEUS-f');
 
 // === CONFIG ===
-const START_PAGE = 5;
-const END_PAGE = 1;
+const START_PAGE = 23;
+const END_PAGE = 20;
 const PAGE_DELAY_MS = 1000;
 
 const TABLE_NAME = 'test_taiwan';
@@ -130,7 +130,7 @@ async function runScraperTaiwan() {
             continue;
           }
 
-          await page.waitForLoadState('networkidle').catch(() => {});
+          await page.waitForLoadState('networkidle').catch(() => { });
           await page
             .waitForSelector(
               '.mdCMN38Item01Ttl, .mdCMN38Ttl, .mdCMN08Ttl',
@@ -150,6 +150,10 @@ async function runScraperTaiwan() {
 
           if (priceText.includes('NT$60')) {
             price = 65;
+          } else if (priceText.includes('NT$72')) {
+            price = 75;
+          } else if (priceText.includes('NT$78')) {
+            price = 85;
           } else {
             price = parseInt(priceText.replace(/[^0-9]/g, ''), 10) || 0;
           }
