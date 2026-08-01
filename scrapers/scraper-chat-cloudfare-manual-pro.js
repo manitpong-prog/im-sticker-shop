@@ -26,29 +26,19 @@ const PAGE_DELAY_MS = 2000;
 // 📝 ใส่ลิงก์สินค้าที่ต้องการดึงเองตรงนี้
 const manualLinks = [
   {
-    link: 'https://line.me/S/sticker/34645345',
+    link: 'https://line.me/S/sticker/35396839',
     promo_price: 12,
-    promo_end_date: '2026-07-11',
-  },
-  {
-    link: 'https://line.me/S/sticker/34329100',
-    promo_price: 12,
-    promo_end_date: '2026-07-06',
-  },
-  {
-    link: 'https://line.me/S/sticker/34842598',
-    promo_price: 12,
-    promo_end_date: '2026-07-11',
-  },
-  {
-    link: 'https://line.me/S/sticker/34532300',
-    promo_price: 15,
     promo_end_date: '2026-07-31',
   },
   {
-    link: 'https://line.me/S/sticker/34637574',
+    link: 'https://line.me/S/sticker/35138988',
     promo_price: 12,
-    promo_end_date: '2026-07-07',
+    promo_end_date: '2026-08-03',
+  },
+  {
+    link: 'https://line.me/S/sticker/35309534',
+    promo_price: 15,
+    promo_end_date: '2026-07-31',
   },
 ];
 // ==========================================

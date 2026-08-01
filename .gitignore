@@ -39,3 +39,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+scrapers/scraper-chat-cloud-newofficial.js
+scrapers/scraper-chat-cloudfare-manual-pro.js
