@@ -10,10 +10,7 @@ export const metadata = {
 };
 
 const stickerPromo15Authors = [
-  {
-    name: 'โซจูคือความสุขที่แน่นอน',
-    url: 'https://line.me/S/shop/sticker/author/5303237/',
-  },
+  
     {
     name: 'Kanatsawan Saetang',
     url: 'https://line.me/S/shop/sticker/author/98656/',
