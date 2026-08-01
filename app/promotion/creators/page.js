@@ -157,7 +157,7 @@ export default function PromotionCreatorsPage() {
             </h2>
 
             <p className="mt-4 text-xl font-black text-[#06C755]">
-              ตั้งแต่วันนี้ - 31 กรกฎาคม 2569
+              ตั้งแต่วันนี้ - 31 สิงหาคม 2569
             </p>
 
             <p className="mt-2 text-sm leading-7 text-slate-500">
@@ -175,7 +175,7 @@ export default function PromotionCreatorsPage() {
                 title="โปรรวมผลงาน"
                 priceText="❤️‍🔥 50© ลายละ 15 บาท ❤️‍🔥"
                 description="ทุกลายในลิงก์นี้"
-                endDateText="📌 ลดถึง 31/7/69"
+                endDateText="📌 ลดถึง 31/8/69"
               >
                 <AuthorLinkList
                   items={stickerPromo15Authors}
@@ -187,7 +187,7 @@ export default function PromotionCreatorsPage() {
                 title="โปรรวมผลงาน"
                 priceText="❤️‍🔥 เฉพาะ 50© ลายละ 12 บาท ❤️‍🔥"
                 description="ทุกลายในลิงก์นี้"
-                endDateText="📌 ลดถึง 31/7/69"
+                endDateText="📌 ลดถึง 31/8/69"
               >
                 <AuthorLinkList
                   items={stickerPromo12Authors}
@@ -199,7 +199,7 @@ export default function PromotionCreatorsPage() {
                 title="โปรอิโมจิรวมผลงาน"
                 priceText="❤️‍🔥 เฉพาะ 70© ลายละ 20 บาท ❤️‍🔥"
                 description="อิโมจิทุกลายในลิงก์นี้"
-                endDateText="📌 ลดถึง 31/7/69"
+                endDateText="📌 ลดถึง 31/8/69"
               >
                 <AuthorLinkList
                   items={emojiPromo20Authors}
