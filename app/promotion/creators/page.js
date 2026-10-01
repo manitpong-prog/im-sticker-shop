@@ -10,12 +10,7 @@ export const metadata = {
 };
 
 const stickerPromo15Authors = [
-<<<<<<< HEAD
   {
-=======
-  
-    {
->>>>>>> 64c08f14183dd54e92b6a7afc8fc26e2046ccd31
     name: 'Kanatsawan Saetang',
     url: 'https://line.me/S/shop/sticker/author/98656/',
   },
