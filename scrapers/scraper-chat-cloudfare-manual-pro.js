@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 const { createClient } = require('@supabase/supabase-js');
 
 
-const supabase = createClient('https://mtmpzbsatolmuttzdxet.supabase.co', 'sb_secret_3rRZ1zjY2mqKCw70VG-wDw_-vfEUS-f');
+const supabase = createClient('https://mtmpzbsatolmuttzdxet.supabase.co', 'sb_publishable_uYfZhEJ_AzJWPDkQyAh1hQ_n4CBHthK');
 
 // ==========================================
 // CONFIG
@@ -26,19 +26,24 @@ const PAGE_DELAY_MS = 2000;
 // 📝 ใส่ลิงก์สินค้าที่ต้องการดึงเองตรงนี้
 const manualLinks = [
   {
-    link: 'https://line.me/S/sticker/35396839',
-    promo_price: 12,
-    promo_end_date: '2026-07-31',
-  },
-  {
-    link: 'https://line.me/S/sticker/35138988',
-    promo_price: 12,
-    promo_end_date: '2026-08-03',
-  },
-  {
-    link: 'https://line.me/S/sticker/35309534',
+    link: 'https://line.me/S/sticker/36780002',
     promo_price: 15,
-    promo_end_date: '2026-07-31',
+    promo_end_date: '2026-10-31',
+  },
+  {
+    link: 'https://line.me/S/sticker/36714873',
+    promo_price: 15,
+    promo_end_date: '2026-10-31',
+  },
+  {
+    link: 'https://line.me/S/sticker/36929499',
+    promo_price: 15,
+    promo_end_date: '2026-10-06',
+  },
+  {
+    link: 'https://line.me/S/sticker/36719803',
+    promo_price: 12,
+    promo_end_date: '2026-10-05',
   },
 ];
 // ==========================================

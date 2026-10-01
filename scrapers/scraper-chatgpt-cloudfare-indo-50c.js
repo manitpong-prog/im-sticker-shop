@@ -1,14 +1,14 @@
 const { chromium } = require('playwright');
 const { createClient } = require('@supabase/supabase-js');
 
-const supabase = createClient('https://mtmpzbsatolmuttzdxet.supabase.co', 'sb_secret_3rRZ1zjY2mqKCw70VG-wDw_-vfEUS-f');
+const supabase = createClient('https://mtmpzbsatolmuttzdxet.supabase.co', 'sb_publishable_uYfZhEJ_AzJWPDkQyAh1hQ_n4CBHthK');
 
 // === CONFIG ===
 const TABLE_NAME = 'test_indo';
 const CATEGORY = 'top_50c_indo';
-const BASE_URL = 'https://store.line.me/stickershop/showcase/new_creators/th?category=2000';
+const BASE_URL = 'https://store.line.me/stickershop/showcase/new_creators/en?category=2000';
 
-const START_PAGE = 20;
+const START_PAGE = 5;
 const END_PAGE = 1;
 
 const TARGET_PRICE = 12000;

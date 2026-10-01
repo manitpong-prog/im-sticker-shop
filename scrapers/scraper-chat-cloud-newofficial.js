@@ -1,10 +1,10 @@
 const { chromium } = require('playwright');
 const { createClient } = require('@supabase/supabase-js');
 
-const supabase = createClient('https://mtmpzbsatolmuttzdxet.supabase.co', 'sb_secret_3rRZ1zjY2mqKCw70VG-wDw_-vfEUS-f');
+const supabase = createClient('https://mtmpzbsatolmuttzdxet.supabase.co', 'sb_publishable_uYfZhEJ_AzJWPDkQyAh1hQ_n4CBHthK');
 
 // === CONFIG ===
-const START_PAGE = 35;
+const START_PAGE = 1;
 const END_PAGE = 1;
 const PAGE_DELAY_MS = 1000;
 // ==============
